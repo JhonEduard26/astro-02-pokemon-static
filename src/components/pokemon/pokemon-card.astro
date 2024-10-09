@@ -23,9 +23,13 @@ const data = (await response.json()) as Pokemon;
 const stats = data.stats.slice(0, 3);
 
 const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
+const audioUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${data.id}.ogg`;
 ---
 
-<div class="bg-slate-700 p-4 rounded-md border-4 border-purple-900">
+<a
+  class="inline-block bg-slate-700 p-4 rounded-md border-4 border-purple-900"
+  href={`/pokemons/${name}`}
+>
   <div class="mb-4 font-semibold">
     <!-- Type -->
     <p class="mb-2 text-2xl capitalize">{name}</p>
@@ -61,6 +65,15 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 
   <!-- Cries -->
   <div>
-    <audio class="w-full" src={data.cries.legacy} controls></audio>
+    <audio class="w-full" controls>
+      <source src={audioUrl} type="audio/ogg" />
+      Your browser does not support the audio element.
+    </audio>
   </div>
-</div>
+</a>
+
+<style>
+  a {
+    @apply transition-[filter] hover:contrast-125;
+  }
+</style>

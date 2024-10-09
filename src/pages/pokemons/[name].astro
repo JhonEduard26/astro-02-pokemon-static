@@ -1,0 +1,46 @@
+---
+import type { GetStaticPaths } from "astro";
+import MainLayout from "../../layouts/main-layout.astro";
+import PokemonCard from "../../components/pokemon/pokemon-card.astro";
+import type { PokeAPIResponse } from "../../interfaces/pokeapi-response";
+
+// {
+//   params: { name: "bulbasaur" },
+//   props: { name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/1/" },
+// },
+// {
+//   params: { name: "charmander" },
+//   props: {
+//     name: "charmander",
+//     url: "https://pokeapi.co/api/v2/pokemon/4/",
+//   },
+// },
+// {
+//   params: { name: "squirtle" },
+//   props: { name: "squirtle", url: "https://pokeapi.co/api/v2/pokemon/7/" },
+// },
+
+export const getStaticPaths = (async () => {
+  const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+  const { results } = (await response.json()) as PokeAPIResponse;
+
+  return results.map(({ name, url }) => ({
+    params: { name },
+    props: { name, url },
+  }));
+}) satisfies GetStaticPaths;
+
+const { name } = Astro.params;
+const { url } = Astro.props;
+---
+
+<MainLayout title="Algún pokémon">
+  <section>
+    <div>
+      <a href="/">Regresar</a>
+      <h1>{name}</h1>
+    </div>
+
+    <PokemonCard name={name} url={url} />
+  </section>
+</MainLayout>
