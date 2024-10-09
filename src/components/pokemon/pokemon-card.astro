@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import StatIcon from "../../icons/stat-icon.astro";
+import type { Pokemon } from "../../interfaces/pokemon";
+
+interface Props {
+  name: string;
+  url: string;
+}
+
+const { name, url } = Astro.props;
+
+const response = await fetch(url);
+
+if (!response.ok) {
+  return {
+    status: response.status,
+    statusText: response.statusText,
+  };
+}
+
+const data = (await response.json()) as Pokemon;
+const stats = data.stats.slice(0, 3);
+
+const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
+---
+
+<div class="bg-slate-700 p-4 rounded-md border-4 border-purple-900">
+  <div class="mb-4 font-semibold">
+    <!-- Type -->
+    <p class="mb-2 text-2xl capitalize">{name}</p>
+    <div class="flex gap-2">
+      {
+        data.types.map((type) => (
+          <div class="px-2 py-1 rounded-sm bg-purple-700 text-purple-100">
+            <span class="text-xs uppercase">{type.type.name}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="mb-2 rounded-sm flex justify-center items-center">
+    <Image src={imageUrl} alt={name} width={200} height={150} />
+  </div>
+
+  <!-- Stats -->
+  <div class="mb-6">
+    <p class="mb-2 font-semibold capitalize">stats</p>
+    <div class="flex justify-between">
+      {
+        stats.map((stat) => (
+          <div class="flex items-center gap-2 px-2 py-1 bg-slate-300 rounded-sm">
+            <StatIcon name={stat.stat.name} className="w-5 h-5" />
+            <span class="font-bold text-slate-900">{stat.base_stat}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Cries -->
+  <div>
+    <audio class="w-full" src={data.cries.legacy} controls></audio>
+  </div>
+</div>

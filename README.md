@@ -12,4 +12,5 @@ bun run dev
 
 > [!NOTE]
 > Para haces integraciones con bun: 
-> hay que usar bunx --bun astro add tailwind
+> hay que usar
+> `bunx --bun astro add tailwind`
