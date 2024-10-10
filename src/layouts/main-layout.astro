@@ -1,9 +1,29 @@
 ---
+import { ViewTransitions } from "astro:transitions";
+
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+const grass = "#78c850";
+const fire = "#f08030";
+const water = "#6890f0";
+const bug = "#a8b820";
+const normal = "#a8a878";
+const poison = "#a040a0";
+const electric = "#f8d030";
+const ground = "#e0c068";
+const fairy = "#ee99ac";
+const fighting = "#c03028";
+const psychic = "#f85888";
+const rock = "#b8a038";
+const ghost = "#705898";
+const ice = "#98d8d8";
+const dragon = "#7038f8";
+const dark = "#705848";
+const steel = "#b8b8d0";
+const flying = "#a890f0";
 ---
 
 <html lang="en">
@@ -13,9 +33,35 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <style
+      is:global
+      define:vars={{
+        grass,
+        fire,
+        water,
+        bug,
+        normal,
+        poison,
+        electric,
+        ground,
+        fairy,
+        fighting,
+        psychic,
+        rock,
+        ghost,
+        ice,
+        dragon,
+        dark,
+        steel,
+        flying,
+      }}
+    ></style>
+
+    <ViewTransitions />
   </head>
   <body
-    class="max-w-3xl m-auto py-12 bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] text-slate-100"
+    class="max-w-3xl min-h-screen m-auto py-12 bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] text-slate-100"
   >
     <slot />
   </body>

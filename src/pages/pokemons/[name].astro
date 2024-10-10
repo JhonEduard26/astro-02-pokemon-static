@@ -3,6 +3,7 @@ import type { GetStaticPaths } from "astro";
 import MainLayout from "../../layouts/main-layout.astro";
 import PokemonCard from "../../components/pokemon/pokemon-card.astro";
 import type { PokeAPIResponse } from "../../interfaces/pokeapi-response";
+import PokemonFullCard from "../../components/pokemon/pokemon-full-card.astro";
 
 // {
 //   params: { name: "bulbasaur" },
@@ -35,12 +36,5 @@ const { url } = Astro.props;
 ---
 
 <MainLayout title="Algún pokémon">
-  <section>
-    <div>
-      <a href="/">Regresar</a>
-      <h1>{name}</h1>
-    </div>
-
-    <PokemonCard name={name} url={url} />
-  </section>
+  <PokemonFullCard name={name} url={url} />
 </MainLayout>

@@ -45,7 +45,13 @@ const audioUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
   </div>
 
   <div class="mb-2 rounded-sm flex justify-center items-center">
-    <Image src={imageUrl} alt={name} width={200} height={150} />
+    <Image
+      transition:name={`${name}-image`}
+      src={imageUrl}
+      alt={name}
+      width={200}
+      height={150}
+    />
   </div>
 
   <!-- Stats -->
@@ -61,14 +67,6 @@ const audioUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
         ))
       }
     </div>
-  </div>
-
-  <!-- Cries -->
-  <div>
-    <audio class="w-full" controls>
-      <source src={audioUrl} type="audio/ogg" />
-      Your browser does not support the audio element.
-    </audio>
   </div>
 </a>
 
