@@ -21,14 +21,13 @@ if (!response.ok) {
 
 const data = (await response.json()) as Pokemon;
 const stats = data.stats.slice(0, 3);
-
+const id = url.split("/").at(-2);
 const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
-const audioUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${data.id}.ogg`;
 ---
 
 <a
   class="inline-block bg-slate-700 p-4 rounded-md border-4 border-purple-900"
-  href={`/pokemons/${name}`}
+  href={`/pokemon/${id}`}
 >
   <div class="mb-4 font-semibold">
     <!-- Type -->
