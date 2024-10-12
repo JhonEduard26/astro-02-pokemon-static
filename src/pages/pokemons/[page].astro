@@ -1,8 +1,9 @@
 ---
 import type { GetStaticPaths } from "astro";
-import PokemonCard from "../../components/pokemon/pokemon-card.astro";
-import type { PokeAPIResponse } from "../../interfaces/pokeapi-response";
-import MainLayout from "../../layouts/main-layout.astro";
+import MainLayout from "@layouts/main-layout.astro";
+import PokemonCard from "@components/pokemon/pokemon-card.astro";
+import type { PokeAPIResponse } from "@interfaces/pokeapi-response";
+import Title from "@components/shared/title.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
   const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
@@ -14,8 +15,7 @@ const { page } = Astro.props;
 ---
 
 <MainLayout title="Pokemon Static">
-  <h1 class="mb-4 text-4xl font-bold">Listado de Pokémons</h1>
-  <hr class="mb-8" />
+  <Title>Listado de Pokémon </Title>
 
   <section
     class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6"
@@ -51,7 +51,11 @@ const { page } = Astro.props;
 
 <style>
   .btn {
-    @apply bg-blue-500 p-2 text-white rounded-md;
+    @apply bg-purple-500 p-2 text-white rounded-md transition-colors duration-300;
+  }
+
+  .btn:hover {
+    @apply bg-purple-700;
   }
 
   .disabled {

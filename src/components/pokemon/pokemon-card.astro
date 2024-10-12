@@ -1,7 +1,7 @@
 ---
+import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import StatIcon from "../../icons/stat-icon.astro";
-import type { Pokemon } from "../../interfaces/pokemon";
+import type { Pokemon } from "@interfaces/pokemon";
 
 interface Props {
   name: string;
@@ -21,13 +21,13 @@ if (!response.ok) {
 
 const data = (await response.json()) as Pokemon;
 const stats = data.stats.slice(0, 3);
-const id = url.split("/").at(-2);
+// const id = url.split("/").at(-2);
 const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${data.id}.png`;
 ---
 
 <a
   class="inline-block bg-slate-700 p-4 rounded-md border-4 border-purple-900"
-  href={`/pokemon/${id}`}
+  href={`/pokemons/${name}`}
 >
   <div class="mb-4 font-semibold">
     <!-- Type -->
@@ -35,7 +35,10 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
     <div class="flex gap-2">
       {
         data.types.map((type) => (
-          <div class="px-2 py-1 rounded-sm bg-purple-700 text-purple-100">
+          <div
+            class="px-2 py-1 rounded-sm text-slate-100"
+            style={`background-color: var(--${type.type.name})`}
+          >
             <span class="text-xs uppercase">{type.type.name}</span>
           </div>
         ))
@@ -49,7 +52,7 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
       src={imageUrl}
       alt={name}
       width={200}
-      height={150}
+      height={200}
     />
   </div>
 
@@ -59,9 +62,9 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
     <div class="flex justify-between">
       {
         stats.map((stat) => (
-          <div class="flex items-center gap-2 px-2 py-1 bg-slate-300 rounded-sm">
-            <StatIcon name={stat.stat.name} className="w-5 h-5" />
-            <span class="font-bold text-slate-900">{stat.base_stat}</span>
+          <div class="flex items-center gap-1 px-2 py-1 bg-purple-700 rounded-sm">
+            <Icon name={stat.stat.name} size={22} />
+            <span class="font-semibold">{stat.base_stat}</span>
           </div>
         ))
       }

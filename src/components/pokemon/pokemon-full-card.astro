@@ -1,7 +1,7 @@
 ---
+import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import StatIcon from "../../icons/stat-icon.astro";
-import type { Pokemon } from "../../interfaces/pokemon";
+import type { Pokemon } from "@interfaces/pokemon";
 
 interface Props {
   name: string;
@@ -26,82 +26,104 @@ const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprit
 const audioUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${data.id}.ogg`;
 ---
 
-<div class="relative rounded-lg border-8" aria-label="Pokemon card">
-  <div class="absolute top-1 left-1">
-    <a href="/">
-      <svg
-        class="w-6 h-6 text-slate-100 hover:text-slate-300"
-        viewBox="0 0 1024 1024"
-        ><path
-          fill="currentColor"
-          d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"></path><path
-          fill="currentColor"
-          d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-        ></path></svg
-      ></a
+<div
+  class="relative rounded-lg border-8 border-purple-900"
+  aria-label="Pokemon card"
+>
+  <div>
+    <button
+      class="absolute top-1 left-1 text-purple-500 hover:text-purple-300"
+      onclick="history.back()"
     >
-  </div>
-  <div class="h-full flex gap-6 p-6">
-    <div>
-      <Image
-        transition:name={`${name}-image`}
-        class="aspect-square object-contain"
-        src={imageUrl}
-        alt=""
-        width={320}
-        height={320}
-      />
-    </div>
-    <div>
-      <div>
-        <h1 class="text-6xl font-bold capitalize tracking-tighter">
-          {name}
-        </h1>
-        <div class="mb-6">
-          <p class="mb-2 font-semibold capitalize">stats</p>
-          <div class="flex justify-between">
+      <Icon name="arrow-back" size={28} />
+    </button>
+    <div class="flex gap-6 w-full h-full p-6">
+      <div class="w-full">
+        <Image
+          transition:name={`${name}-image`}
+          class="aspect-square object-contain"
+          src={imageUrl}
+          alt=""
+          width={320}
+          height={320}
+        />
+      </div>
+      <div class="w-full">
+        <div>
+          <div class="flex items-end gap-4 mb-6">
+            <h1 class="text-6xl font-bold capitalize tracking-tighter">
+              {name}
+            </h1>
+            <button id="btn-favorite">
+              <Icon class="" name="heart-outline" size={44} />
+              <Icon class="hidden" name="heart-fill" size={44} />
+            </button>
+          </div>
+          <div class="mb-4">
+            <p class="mb-2 font-semibold capitalize">stats</p>
+            <div class="flex gap-2">
+              {
+                stats.map((stat) => (
+                  <div
+                    class:list={[
+                      "flex items-center gap-1 px-2 py-1 rounded-sm",
+                      {
+                        "text-green-500": stat.stat.name === "hp",
+                        "text-red-500": stat.stat.name === "attack",
+                        "text-blue-500": stat.stat.name === "defense",
+                      },
+                    ]}
+                    aria-label={`stat ${stat.stat.name}`}
+                    title={stat.stat.name}
+                  >
+                    <Icon name={stat.stat.name} size={40} />
+                    <span class="text-2xl font-bold text-inherit">
+                      {stat.base_stat}
+                    </span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <p class="mb-2 font-semibold capitalize">types</p>
+          <div class="flex gap-4">
             {
-              stats.map((stat) => (
-                <div class="flex items-center gap-2 px-2 py-1 bg-slate-300 rounded-sm">
-                  <StatIcon name={stat.stat.name} className="w-5 h-5" />
-                  <span class="font-bold text-slate-900">{stat.base_stat}</span>
+              data.types.map((type) => (
+                <div
+                  class="px-2 py-1 pb-2 rounded-sm text-slate-100"
+                  style={`background-color: var(--${type.type.name})`}
+                >
+                  <span class="text-xs uppercase font-semibold">
+                    {type.type.name}
+                  </span>
                 </div>
               ))
             }
           </div>
         </div>
-      </div>
-      <div class="mb-6">
-        <p class="mb-2 font-semibold capitalize">types</p>
-        <div class="flex gap-4">
-          {
-            data.types.map((type) => (
-              <div
-                class="px-2 py-1 pb-2 rounded-sm text-slate-100"
-                style={`background-color: var(--${type.type.name})`}
-              >
-                <span class="text-xs uppercase font-semibold">
-                  {type.type.name}
-                </span>
-              </div>
-            ))
-          }
+        <div class="mb-4">
+          <p>
+            <span class="font-semibold">Height: </span>{data.height / 10} m.
+          </p>
+          <p>
+            <span class="font-semibold">Height: </span>{data.weight / 10} m.
+          </p>
         </div>
-      </div>
-      <div class="mb-4">
-        <p>
-          <span class="font-semibold">Height: </span>{data.height / 10} m.
-        </p>
-        <p>
-          <span class="font-semibold">Height: </span>{data.weight / 10} m.
-        </p>
-      </div>
-      <div>
-        <audio class="w-full" controls>
-          <source src={audioUrl} type="audio/ogg" />
-          Your browser does not support the audio element.
-        </audio>
+        <div class="audio-container">
+          <audio class="w-full" controls>
+            <source src={audioUrl} type="audio/ogg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .audio-container {
+    @apply w-full bg-slate-100 p-2 rounded-lg;
+  }
+</style>

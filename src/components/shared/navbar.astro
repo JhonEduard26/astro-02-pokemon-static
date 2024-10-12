@@ -1,0 +1,59 @@
+---
+const links = [
+  {
+    href: "/",
+    text: "Listado",
+  },
+  {
+    href: "/pokemons/1/",
+    text: "Paginado",
+  },
+  {
+    href: "/favorites/",
+    text: "Favoritos",
+  },
+];
+
+const { pathname } = Astro.url;
+---
+
+<nav class="">
+  <div
+    class="container flex items-center justify-center gap-4 p-6 mx-auto capitalize text-gray-300"
+  >
+    <!-- {
+      links.map(({ href, text }) => (
+        <a
+          href={href}
+          class:list={[
+            "mx-1.5 text-lg font-semibold text-gray-300 border-b-2 border-transparent hover:border-purple-700 hover:text-gray-100",
+            { "border-purple-700 text-gray-100": pathname === href },
+          ]}
+        >
+          {text}
+        </a>
+      ))
+    } -->
+
+    {
+      links.map(({ href, text }) => (
+        <div>
+          <a
+            href={href}
+            class="mx-1.5 text-lg font-semibold text-gray-300 hover:text-gray-100"
+          >
+            {text}
+          </a>
+          {pathname === href ? (
+            <div
+              transition:name="menu-link"
+              class="border-b-2 border-purple-500"
+            />
+          ) : (
+            <div class="border-b-2 border-transparent" />
+          )}
+        </div>
+      ))
+    }
+  </div>
+</nav>
