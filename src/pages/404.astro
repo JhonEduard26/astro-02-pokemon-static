@@ -1,0 +1,35 @@
+---
+import Title from "@components/shared/title.astro";
+import MainLayout from "@layouts/main-layout.astro";
+import { Image } from "astro:assets";
+
+const imageRegisteel = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/379.png`;
+---
+
+<MainLayout title="404 Page">
+  <div
+    class="flex flex-col justify-center items-center max-w-md mx-auto p-6 rounded-lg bg-slate-700"
+  >
+    <Title>404 - Page Not Found</Title>
+    <p>
+      ¡Uy! Parece que te has metido en la hierba alta. Esta página no existe,
+      ¡pero te has encontrado con un Pokémon salvaje!
+    </p>
+
+    <Image src={imageRegisteel} alt="Registeel" width={200} height={200} />
+
+    <p class="mb-4 font-semibold capitalize">registeel appeared!</p>
+
+    <a href="/"> Regresar al home </a>
+  </div>
+</MainLayout>
+
+<style>
+  a {
+    @apply bg-purple-500 text-slate-100 p-2 rounded-md mt-4 transition-colors duration-300;
+  }
+
+  a:hover {
+    @apply bg-purple-700;
+  }
+</style>

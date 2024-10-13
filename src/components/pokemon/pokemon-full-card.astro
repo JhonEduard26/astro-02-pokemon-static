@@ -54,9 +54,9 @@ const audioUrl = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pok
             <h1 class="text-6xl font-bold capitalize tracking-tighter">
               {name}
             </h1>
-            <button id="btn-favorite">
-              <Icon class="" name="heart-outline" size={44} />
-              <Icon class="hidden" name="heart-fill" size={44} />
+            <button id="btn-favorite" data-name={name} data-id={data.id}>
+              <Icon data-outline class="" name="heart-outline" size={44} />
+              <Icon data-fill class="hidden" name="heart-fill" size={44} />
             </button>
           </div>
           <div class="mb-4">
